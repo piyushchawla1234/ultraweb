@@ -1,4 +1,4 @@
-// src/app/page.tsx
+// UltraWeb.ai Enhanced Landing Page MVP (Next.js + Framer Motion + Features + Footer)
 
 'use client';
 
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white overflow-x-hidden overflow-y-auto relative">
       <div className="fixed top-0 left-0 w-full h-full z-0">
-        {/* Nurolink-style background video */}
+        {/* Neural-style background video */}
         <video
           autoPlay
           loop
@@ -25,7 +25,7 @@ export default function Home() {
         <div className="space-y-6">
           <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight text-white drop-shadow-xl">
             <motion.span className="text-blue-500">ULTRAWEB</motion.span>
-            <span className="text-sm font-light ml-2 align-top">.ai</span>
+            <span className="text-sm font-light ml-2 align-top text-white/70">.ai</span>
           </h1>
 
           <motion.p
@@ -40,7 +40,7 @@ export default function Home() {
 
         {/* Signup Form */}
         <form
-          action="https://formspree.io/f/your-form-id" // Replace this
+          action="https://formspree.io/f/your-form-id" // Replace this with your actual Formspree ID
           method="POST"
           className="flex flex-col items-center gap-4"
         >
@@ -59,6 +59,28 @@ export default function Home() {
           </button>
         </form>
 
+        {/* Features Section */}
+        <motion.section
+          className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-white text-center px-6 py-20"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <div className="bg-white/5 rounded-xl p-6 shadow-md backdrop-blur-sm">
+            <h3 className="text-xl font-bold text-blue-400 mb-2">🔍 Smart Search Enhancer</h3>
+            <p className="text-gray-300">UltraWeb augments your search engine with real-time AI suggestions and task execution from search pages.</p>
+          </div>
+          <div className="bg-white/5 rounded-xl p-6 shadow-md backdrop-blur-sm">
+            <h3 className="text-xl font-bold text-purple-400 mb-2">✈️ One-Tap Bookings</h3>
+            <p className="text-gray-300">Book flights or hotels directly from Google results with one click. It's travel simplified.</p>
+          </div>
+          <div className="bg-white/5 rounded-xl p-6 shadow-md backdrop-blur-sm">
+            <h3 className="text-xl font-bold text-pink-400 mb-2">🤖 AI Autofill & Automation</h3>
+            <p className="text-gray-300">Fill out forms, enter OTPs, and automate your browsing with intelligent input predictions.</p>
+          </div>
+        </motion.section>
+
+        {/* Welcome Section */}
         <motion.section
           className="max-w-3xl mx-auto text-center text-gray-200 px-4 space-y-6 pb-20"
           initial={{ opacity: 0, y: 40 }}
@@ -78,6 +100,11 @@ export default function Home() {
             It’s like having a smart co-pilot for your everyday web life.
           </p>
         </motion.section>
+
+        {/* Footer */}
+        <footer className="text-sm text-gray-500 text-center py-10 border-t border-white/10 w-full">
+          <p>© {new Date().getFullYear()} UltraWeb.ai — All rights reserved.</p>
+        </footer>
       </div>
     </main>
   );
