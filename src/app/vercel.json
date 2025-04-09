@@ -1,0 +1,21 @@
+{
+    "redirects": [
+      {
+        "source": "https://ultraweb.ai/",
+        "destination": "https://www.ultraweb.ai/",
+        "permanent": true
+      },
+      {
+        "source": "/",
+        "has": [
+          {
+            "type": "host",
+            "value": "ultraweb.ai"
+          }
+        ],
+        "destination": "https://www.ultraweb.ai/",
+        "permanent": true
+      }
+    ]
+  }
+  
