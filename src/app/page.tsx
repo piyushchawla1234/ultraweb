@@ -1,112 +1,115 @@
-// UltraWeb.ai Enhanced Landing Page MVP (Next.js + Framer Motion + Features + Footer)
+"use client";
+import React, { useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { RocketIcon, SearchIcon, BrainIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
-'use client';
+export default function LandingPage() {
+  const lightRef = useRef<HTMLDivElement | null>(null);
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+  useEffect(() => {
+    let animationFrameId: number;
 
-export default function Home() {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (lightRef.current) {
+        animationFrameId = requestAnimationFrame(() => {
+          if (lightRef.current) {
+            lightRef.current.style.left = `${e.clientX}px`;
+            lightRef.current.style.top = `${e.clientY}px`;
+          }
+        });
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
   return (
-    <main className="min-h-screen bg-black text-white overflow-x-hidden overflow-y-auto relative">
-      <div className="fixed top-0 left-0 w-full h-full z-0">
-        {/* Neural-style background video */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-30"
-        >
-          <source src="/neural-animation.mp4" type="video/mp4" />
-        </video>
-      </div>
+    <div className="relative min-h-screen bg-black text-white font-sans overflow-hidden">
+      {/* Optimized Glowing Cursor Effect */}
+      <div
+        ref={lightRef}
+        className="pointer-events-none fixed w-32 h-32 -ml-16 -mt-16 rounded-full bg-purple-500 opacity-70 blur-2xl z-10 transition-transform duration-100 mix-blend-screen"
+      ></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-28 text-center space-y-20">
-        <div className="space-y-6">
-          <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight text-white drop-shadow-xl">
-            <motion.span className="text-blue-500">ULTRAWEB</motion.span>
-            <span className="text-sm font-light ml-2 align-top text-white/70">.ai</span>
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover opacity-20 z-0"
+      >
+        <source src="/background-video.mp4" type="video/mp4" />
+        {/* Optional fallback text */}
+        Your browser does not support the video tag.
+      </video>
+
+      {/* Overlay content */}
+      <div className="relative z-20 px-6 py-12">
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <h1 className="text-5xl font-bold leading-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
+            UltraWeb.ai
           </h1>
-
-          <motion.p
-            className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto"
-            whileHover={{ scale: 1.02, color: '#ffffff' }}
-          >
-            Imagine an internet that thinks with you. UltraWeb.ai is your intelligent browser sidekick —
-            it enhances search engines, books flights from search queries, fills forms smartly, and
-            automates your digital journey using AI. Just type — and let UltraWeb handle the rest.
-          </motion.p>
-        </div>
-
-        {/* Signup Form */}
-        <form
-          action="https://formspree.io/f/your-form-id" // Replace this with your actual Formspree ID
-          method="POST"
-          className="flex flex-col items-center gap-4"
-        >
-          <input
-            type="email"
-            name="email"
-            required
-            placeholder="Enter your email for early access"
-            className="px-5 py-3 w-80 rounded-full text-white bg-gradient-to-r from-blue-600 to-purple-600 focus:outline-none placeholder-white shadow-xl border border-white/20 backdrop-blur-sm"
-          />
-          <button
-            type="submit"
-            className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg backdrop-blur-sm"
-          >
-            🚀 Get Early Access
-          </button>
-        </form>
-
-        {/* Features Section */}
-        <motion.section
-          className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-white text-center px-6 py-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <div className="bg-white/5 rounded-xl p-6 shadow-md backdrop-blur-sm">
-            <h3 className="text-xl font-bold text-blue-400 mb-2">🔍 Smart Search Enhancer</h3>
-            <p className="text-gray-300">UltraWeb augments your search engine with real-time AI suggestions and task execution from search pages.</p>
-          </div>
-          <div className="bg-white/5 rounded-xl p-6 shadow-md backdrop-blur-sm">
-            <h3 className="text-xl font-bold text-purple-400 mb-2">✈️ One-Tap Bookings</h3>
-            <p className="text-gray-300">Book flights or hotels directly from Google results with one click. It's travel simplified.</p>
-          </div>
-          <div className="bg-white/5 rounded-xl p-6 shadow-md backdrop-blur-sm">
-            <h3 className="text-xl font-bold text-pink-400 mb-2">🤖 AI Autofill & Automation</h3>
-            <p className="text-gray-300">Fill out forms, enter OTPs, and automate your browsing with intelligent input predictions.</p>
-          </div>
-        </motion.section>
-
-        {/* Welcome Section */}
-        <motion.section
-          className="max-w-3xl mx-auto text-center text-gray-200 px-4 space-y-6 pb-20"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold">
-            Welcome to the Future of Browsing
-          </h2>
-          <p className="text-lg md:text-xl leading-relaxed">
-            <strong className="text-blue-400">UltraWeb.ai</strong> is not just a browser extension — it's your personal AI that upgrades how you explore the internet.
-            Whether you're booking a flight, filling out forms, searching for deals, or just trying to get things done faster — 
-            UltraWeb does the work for you.
+          <p className="text-xl text-gray-300 mb-8">
+            The AI-native way to search, browse, and act on the internet. Smarter, faster, and deeply personal.
           </p>
-          <p className="text-lg md:text-xl leading-relaxed">
-            Just type like you normally do. UltraWeb understands your intent, automates your task, and helps you achieve results with minimal effort. 
-            It’s like having a smart co-pilot for your everyday web life.
-          </p>
-        </motion.section>
 
-        {/* Footer */}
-        <footer className="text-sm text-gray-500 text-center py-10 border-t border-white/10 w-full">
-          <p>© {new Date().getFullYear()} UltraWeb.ai — All rights reserved.</p>
-        </footer>
+          {/* Buttons */}
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex justify-center space-x-4">
+              <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white rounded-xl px-6 py-2">
+                Join the Waitlist
+              </Button>
+              <Button variant="outline" className="border-gray-500 text-gray-300 rounded-xl px-6 py-2">
+                See How It Works
+              </Button>
+            </div>
+            <Button className="text-lg px-6 py-3 rounded-xl shadow-lg bg-gradient-to-r from-indigo-500 to-purple-600 hover:opacity-90">
+              🔮 Try UltraWeb
+            </Button>
+          </div>
+        </motion.div>
+
+        {/* Feature cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="max-w-5xl mx-auto mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 text-center"
+        >
+          <div className="bg-gray-900/70 rounded-2xl p-6 shadow-xl">
+            <SearchIcon className="mx-auto h-10 w-10 text-purple-400 mb-4" />
+            <h3 className="text-lg font-semibold mb-2">Smarter Search</h3>
+            <p className="text-gray-400 text-sm">
+              Natural language queries, summarized results, and AI understanding built into every search.
+            </p>
+          </div>
+          <div className="bg-gray-900/70 rounded-2xl p-6 shadow-xl">
+            <BrainIcon className="mx-auto h-10 w-10 text-blue-400 mb-4" />
+            <h3 className="text-lg font-semibold mb-2">Built-in Intelligence</h3>
+            <p className="text-gray-400 text-sm">
+              UltraWeb learns your intent, history, and preferences to deliver deeply personal results.
+            </p>
+          </div>
+          <div className="bg-gray-900/70 rounded-2xl p-6 shadow-xl">
+            <RocketIcon className="mx-auto h-10 w-10 text-pink-400 mb-4" />
+            <h3 className="text-lg font-semibold mb-2">Actionable AI</h3>
+            <p className="text-gray-400 text-sm">
+              Take actions directly — book, buy, email, summarize — right from your results page.
+            </p>
+          </div>
+        </motion.div>
       </div>
-    </main>
+    </div>
   );
 }
-// redeploy trigger
